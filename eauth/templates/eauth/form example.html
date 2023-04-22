@@ -1,0 +1,18 @@
+<form class="form-signin" method="POST" action="/eauth/signin/">
+    {% csrf_token %}
+    <img class="mb-2" src="/static/1.png" alt="" width="250" height="100">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="username" class="sr-only">Username &emsp; </label>
+    <input type="text" id="username" class=" col-md-4 my-2" name="username" placeholder="Username" required autofocus>
+    <br>
+    <label for="inputPassword" class="sr-only">Password &emsp;</label>
+    <input type="password" id="inputPassword" class="col-md-4 my-2" name="password" placeholder="Password" required>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></br>
+    <a href="/eauth/signup/">Register your account here</a>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+  </form>

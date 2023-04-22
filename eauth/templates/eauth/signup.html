@@ -1,0 +1,80 @@
+{% extends 'ecomapp/base2.html' %}
+{% block title %}Sign up{% endblock title %}
+{% block body %}
+
+    <div class="container">
+      <div class="row align-items-start">
+        <div class="col">
+          
+        </div>
+        <div class="col text-center  mt-2 mb-2 bg-dark text-light">
+          {% for message in messages %}
+    <div class="container">
+    <div align="left" class="bg-danger text-light alert alert-{{ message.tags }} alert-dismissible fade show my-0 mx-0" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    </div>
+    {% endfor %}
+          <hr>
+          <h2 class="mt-3">SignUp Below:</h2><hr>
+          <form class="row g-2 "method="POST" action="/eauth/signup/">
+            {% csrf_token %}
+            <div class="">
+              <label for="validationCustom02" class="form-label">Username</label>
+              <input type="text" class="form-control"name='username' id="username" value="" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+            
+            <div class="">
+              <label for="validationCustom03" class="form-label">Email</label>
+              <input type="email" class="form-control"name='email'value="" id="email" required>
+              <div class="invalid-feedback">
+                Please provide a valid email.
+              </div>
+            </div>
+            
+            <div class="">
+                <label for="validationCustom01" class="form-label">Enter Password</label>
+                <input type="password" class="form-control"name='password' id="password" value="" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+              <div class="">
+                <label for="validationCustom01" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control"name='password2' id="password" value="" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                  Agree to terms and conditions
+                </label>
+                <div class="invalid-feedback">
+                  You must agree before submitting.
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary mb-3" type="submit">SignUp</button><br>
+              <a class="text-warning mt-2" href="/eauth/signin/">Already have account?</a><hr>
+            </div>
+          </form>
+        </div>
+        <div class="col">
+          
+        </div>
+      </div>
+
+    
+    
+    
+    
+</div>
+{% endblock body %}

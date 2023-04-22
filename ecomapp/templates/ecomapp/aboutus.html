@@ -1,0 +1,42 @@
+{% extends 'ecomapp/base2.html' %}
+{% load static %}
+{% block title %}About Us{% endblock title %}
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            
+            <img src="{% static 'about.jpg' %}" class="mr-2" alt="flag">
+                
+
+            
+        </div>
+        <div class="col-sm-6 ">
+            <div class="row p-3">
+                <div class="flex--item6 ml-auto pr32" data-v-df83897e="">
+                    <div class="p-ff-roboto-slab fs-subheading fc-black-400 mb24" data-v-df83897e="">Who we are</div>
+                    <h1 class="p-ff-roboto-slab fs-display1" data-v-df83897e=""> Empowering the world to develop
+                        technology through collective knowledge. </h1>
+                    <p class="fs-subheading fc-black-600 p-lh-md" data-v-df83897e=""> Our public platform <strong
+                            class="p-ff-source-bold" data-v-df83897e="">serves 100 million people every month</strong>,
+                        making it one of the most popular websites in the world. </p>
+                    <p class="fs-subheading fc-black-600 p-lh-md" data-v-df83897e=""> Our asynchronous knowledge
+                        management and collaboration offering, <strong class="p-ff-source-bold" data-v-df83897e="">Stack
+                            Overflow for Teams</strong>, is transforming how people work. </p>
+                </div>
+                <div class="flex--item6 ml-auto pr32" data-v-df83897e="">
+                    <div class="p-ff-roboto-slab fs-subheading fc-black-400 mb24" data-v-df83897e="">What we do</div>
+                    <p class="fs-subheading fc-black-600 p-lh-md" data-v-df83897e="">Teams around the world invent on
+                        behalf of our customers every day to meet their desire for lower prices, better selection, and
+                        convenient services. One way we guarantee a wide selection of products and services for
+                        customers is by creating India-specific programs to support the thousands of small and medium
+                        businesses in India that sell on Amazon.in. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

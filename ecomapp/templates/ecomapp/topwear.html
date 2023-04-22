@@ -1,0 +1,38 @@
+{% extends 'ecomapp/base2.html' %}
+{% load static %}
+{% block title %}Top Wear{% endblock title %}
+{% block body %}
+
+<div class="container">
+   <div class="row">
+    <div class="col-sm-2">
+     <hr> Filter: <hr>
+     <ul class="list-group">
+      <a href="{% url 'topwear' %}" class="list-group-item list-group-item-action" aria-current="true">All Topwear</a>
+      <a href="{% url 'topweardata' 'below' %}" class="list-group-item list-group-item-action" aria-current="true">Below 500</a>
+      <a href="{% url 'topweardata' 'above' %}" class="list-group-item list-group-item-action" aria-current="true">Above 500</a>
+
+    </ul>
+    </div>
+    <div class="col-sm-10 ">
+      <div class="row p-3">
+          {% for i in cat reversed %}
+          <div class="card ml-3 mb-3" style="width: 18rem;">
+           <img src="{{i.product_image.url}}" class="card-img-top" style="height: 250px;" alt="...">
+           <div class="card-body">
+             <h6 class="card-title"><strong>{{i.title|slice:15}}</strong><strong style="float: right;">Rs.{{i.discounted_price}}</strong><h6>
+              Brand- {{i.brand}}
+              <h3><a href="{% url 'product-detail' i.id %}" class="btn btn-primary shadow">Details</a><form action="{% url 'buy-now' %}" class='d-inline'>
+                <input type="hidden" name='prod_id' value='{{i.id}}' id='prod_id'>
+                <button type= 'submit' class='btn btn-primary shadow px-4 py-2 ms-4' style="float: right;">Buy Now</button>
+               </form></h3>
+           </div>
+         </div>
+         {% endfor %}
+        </div>
+    </div>
+   </div>
+  </div>
+  
+
+{% endblock body %}

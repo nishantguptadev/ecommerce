@@ -1,0 +1,43 @@
+{% extends 'ecomapp/base2.html' %}
+{% load static %}
+{% block title %}Customer{% endblock title %}
+{% block body %}
+<div class="row"></div>
+<div class=" p-3">
+  {% for message in messages %}
+    <div align="left" class="bg-success text-light alert alert-{{ message.tags }} alert-dismissible fade show my-0 mx-0" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    <h1>Hello. What can we help you with? </h1>
+</div>
+<hr>
+
+<div class="container col-6 p-3">
+    <form action="{% url 'customer' %}" method="POST" class="row g-3">
+      {% csrf_token %}
+        <div class="col-md-6">
+          <label for="username" class="form-label">Username</label>
+          <input type="user" class="form-control" id="user" name="user" placeholder="Username">
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email"  name="email" placeholder="Email">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Query</label>
+          <input type="text" class="form-control" id="query"  name="query" placeholder="Query">
+        </div>
+        <div class="col-12">
+          <label for="" class="text">Details</label><br>
+          <textarea id="detail" name="detail" rows="4" cols="50"> </textarea>
+        </div>
+        
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+</div>
+
+{% endblock body %}
