@@ -3,7 +3,7 @@ from .models import *
 from math import ceil
 from django.contrib import messages
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -33,7 +33,13 @@ def index(request):
 
 def product_detail(request, pk):
     product=Product.objects.get(pk=pk)
-    return render(request, "ecomapp/productdetail.html", {'product': product})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/productdetail.html", {'product':product,'like':like})
+    else:
+        return render(request, "ecomapp/productdetail.html", {'product': product})
+    
 
 def buy_now(request):
     if request.user.is_authenticated:
@@ -50,7 +56,12 @@ def buy_now(request):
 
 def cosmetics(request):
     cat=Product.objects.filter(category='Cosmetics')
-    return render(request, "ecomapp/electronic.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/cosmetics.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/cosmetics.html", {'cat':cat})
 
 def electronic(request, data=None):
     # brand=Product.objects.filter(category='Electronics').values("brand").distinct()
@@ -63,7 +74,12 @@ def electronic(request, data=None):
     elif data == 'Camera' or 'Mobile' or 'Laptop':
         cat = Product.objects.filter(category='Electronics').filter(sub_category=data)
        
-    return render(request, "ecomapp/electronic.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/electronic.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/electronic.html", {'cat':cat})
 
 def mobiles(request, data=None):
     # brand=Product.objects.filter(category='Electronics').values("brand").distinct()
@@ -76,7 +92,12 @@ def mobiles(request, data=None):
     elif data == 'Samsung' or 'Apple' or 'OnePlus' or 'Redmi':
         cat = Product.objects.filter(sub_category='Mobile').filter(brand=data)
       
-    return render(request, "ecomapp/mobiles.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/mobiles.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/mobiles.html", {'cat':cat})
 
 def topwear(request, data=None):
     # brand=Product.objects.filter(category='Electronics').values("brand").distinct()
@@ -87,7 +108,12 @@ def topwear(request, data=None):
     elif data == 'above':
         cat = Product.objects.filter(sub_category='Topwear').filter(discounted_price__gt=500)# gt is greater then 
       
-    return render(request, "ecomapp/topwear.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/topwear.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/topwear.html", {'cat':cat})
 
 def bottomwear(request, data=None):
     # brand=Product.objects.filter(category='Electronics').values("brand").distinct()
@@ -97,7 +123,12 @@ def bottomwear(request, data=None):
         cat = Product.objects.filter(sub_category='Bottomwear').filter(discounted_price__lt=500)
     elif data == 'above':
         cat = Product.objects.filter(sub_category='Bottomwear').filter(discounted_price__gt=500)# gt is greater then    
-    return render(request, "ecomapp/bottomwear.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/bottomwear.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/bottomwear.html", {'cat':cat})
 
 def laptops(request, data=None):
     # brand=Product.objects.filter(category='Electronics').values("brand").distinct()
@@ -109,9 +140,13 @@ def laptops(request, data=None):
         cat = Product.objects.filter(sub_category='Laptop').filter(discounted_price__gt=35000)# gt is greater then
     elif data == 'HP' or 'Lenovo' or 'Samsung':
         cat = Product.objects.filter(sub_category='Laptop').filter(brand=data)
-    
-      
-    return render(request, "ecomapp/laptops.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/laptops.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/laptops.html", {'cat':cat})
+   
 
 def fashion(request, data=None):
     if data == None:
@@ -123,7 +158,12 @@ def fashion(request, data=None):
     elif data == 'Topwear' or 'Bottomwear':
         cat = Product.objects.filter(category='Fashion').filter(sub_category=data)
     
-    return render(request, "ecomapp/fashion.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/fashion.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/fashion.html", {'cat':cat})
 
 
 def jewellery(request, data=None):
@@ -136,7 +176,12 @@ def jewellery(request, data=None):
     elif data == 'Necklace' or 'Earings' or 'Bangles':
         cat = Product.objects.filter(category='Jewellery').filter(sub_category=data)
     
-    return render(request, "ecomapp/jewellery.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/jewellery.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/jewellery.html", {'cat':cat})
 
 def watches(request, data=None):
     if data == None:
@@ -148,7 +193,12 @@ def watches(request, data=None):
     elif data == 'Titan' or 'Fastrack':
         cat = Product.objects.filter(category='Watch').filter(brand=data)
     
-    return render(request, "ecomapp/watches.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/watches.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/watches.html", {'cat':cat})
 
 def add_to_cart(request):
     if request.user.is_authenticated:
@@ -170,6 +220,8 @@ def cart(request):
     if request.user.is_authenticated:
         user = request.user
         cart = Cart.objects.filter(user=user) # it will give query set of id in cart table for particular user
+        coupon = Coupon.objects.all()
+        appliedcoupon=""
         amount=0.0
         shipping_amount=70.0
         total_amount=0.0
@@ -181,7 +233,25 @@ def cart(request):
                 tempamount = (p.quantity * p.product.discounted_price)
                 amount += tempamount
                 total_amount=amount + shipping_amount
-                return render(request, 'ecomapp/addtocart.html', {'carts':cart,'amount':amount, 'total_amount': total_amount})
+
+            if request.method=="POST":
+                appliedcoupon=request.POST.get('coupon','')
+                coupon=Coupon.objects.all()
+                for i in coupon:
+                    if i.name == appliedcoupon:
+                        coupon_type=Coupon.objects.get(name=i.name)
+                        discount_type=coupon_type.discount_type
+                        discount=int(coupon_type.discount)
+                        if discount_type == "Cash":
+                            amount=amount-discount
+                            total_amount=amount + shipping_amount
+                        else:
+                            discount=(discount/100)*amount
+                            amount=amount-discount
+                            total_amount=amount + shipping_amount
+                        messages.info(request, "Your Coupon has been applied!!")
+                    
+            return render(request, 'ecomapp/addtocart.html', {'carts':cart,'amount':amount, 'total_amount': total_amount, 'coupon': coupon, 'appliedcoupon':appliedcoupon})
         else:
             messages.info(request, "Your Cart is Empty! Please add some items in your cart!!")
             return render(request, 'ecomapp/emptycart.html')
@@ -275,18 +345,24 @@ def itemadded(request):
             return JsonResponse(data)
 
 def checkout(request):
+    totalamount=0.0
+    if request.method=="POST":
+        print("hello")
+        totalamount=request.POST.get("total_amount")
+    else:
+        amount=0.0
+        shipping_amount=70.0
+        cart_prodcut = [p for p in Cart.objects.all() if p.user == request.user] # it will give list of id in cart table for particular user
+        if cart_prodcut:
+            for p in cart_prodcut:
+                tempamount = (p.quantity * p.product.discounted_price)
+                amount += tempamount
+                totalamount=amount + shipping_amount
+
     user=request.user
     address = Customer.objects.filter(user=user)
     items = Cart.objects.filter(user=user)
-    amount=0.0
-    shipping_amount=70.0
-    total_amount=0.0
-    cart_prodcut = [p for p in Cart.objects.all() if p.user == request.user] # it will give list of id in cart table for particular user
-    if cart_prodcut:
-        for p in cart_prodcut:
-            tempamount = (p.quantity * p.product.discounted_price)
-            amount += tempamount
-            totalamount=amount + shipping_amount   
+      
     return render(request, 'ecomapp/checkout.html', {'address':address, 'items':items, 'totalamount':totalamount})
 
 def payment(request):
@@ -298,7 +374,7 @@ def payment(request):
         for i in cart:
             OrderPlaced(user=user, customer=customer, product=i.product, quantity=i.quantity).save()
             i.delete()
-            messages.info(request, "Your order have been placed. Thanks for ordering with us!!")
+        messages.info(request, "Your order have been placed. Thanks for ordering with us!!")
         return redirect("orders")
     else:
         messages.info(request,'please select the address')
@@ -326,7 +402,12 @@ def search(request):
     query= request.GET.get('q')
     search=Product.objects.filter(Q(category__icontains=query) | Q(sub_category__icontains=query) | Q(description__icontains=query)| Q(title__icontains=query) | Q(brand__icontains=query))
     print(search)
-    return render(request, 'ecomapp/search.html',{"search" : search})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/search.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/search.html", {'cat':cat})
 
 def aboutus(request):
     return render(request, "ecomapp/aboutus.html")
@@ -399,13 +480,70 @@ def newadd(request, data=None):
     elif data == 'Electronics' or 'Jewellery' or 'Watch' or 'Cosmetics' or 'Fashion':
         cat = Product.objects.filter(category=data).order_by('-id')[:9]
        
-    return render(request, "ecomapp/newadd.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/newadd.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/newadd.html", {'cat':cat})
     
 def bestsell(request):
     cat = OrderPlaced.objects.all().order_by('-id')[:6]
-    return render(request, "ecomapp/bestsell.html", {'cat':cat})
+    user=request.user
+    if user.is_authenticated:
+        like=Like.objects.all().filter(user=request.user)
+        return render(request, "ecomapp/bestsell.html", {'cat':cat,'like':like})
+    else:
+        return render(request, "ecomapp/bestsell.html", {'cat':cat})
 
+# def like_now(request):
+#     status=False
+#     if request.user.is_authenticated:
+#         user= request.user
+#         product_id=request.GET.get('prod_id')
+#         product = Product.objects.get(id=product_id) #to get instance of product from Product table through id
+#         status=True
+#         cart_prodcut = Like.objects.filter(product=product).filter(user=user)
+#         Like(user=user, product=product, status=status).save() #save user and product in cart
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))#to return to the same page
 
+def wishlist(request):
+    user=request.user
+    if user.is_authenticated:
+        cat = Like.objects.filter(user=user)
+        if cat:
+            like=Like.objects.all().filter(user=request.user)
+            return render(request, "ecomapp/wishlist.html", {'cat':cat,'like':like})
+        else:
+            messages.info(request, "You haven't liked anything yet")
+        return render(request, "ecomapp/wishlist.html")        
+    else:
+        return render(request, "eauth/signin.html")
+
+def add_to_wishlist(request): #this function is used to delete also
+    product_id = request.GET.get("id")
+    product = Product.objects.get(id=product_id)
+    context = {}
+    wishlist_count = Like.objects.filter(product=product, user=request.user).count()
+    print(wishlist_count)
+    if wishlist_count > 0:
+        now_wishlist=Like.objects.filter(product=product, user=request.user).delete()
+        context = {
+            "bool": False
+        }
+
+    else:
+        now_wishlist=Like.objects.create(
+            product=product,
+            user=request.user,
+            status=True
+        )
+    
+        context= {
+            "bool": True
+         }
+
+    return JsonResponse(context)
 
     
     

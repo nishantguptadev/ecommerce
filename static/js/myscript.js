@@ -95,3 +95,32 @@ $(document).on('click', '.confirm-delete', function(){
 //     alert('item added')
 // }
 
+//add to wishlist:
+$(document).on("click", ".add-to-wishlist", function(){
+    let product_id = $(this).attr("data-product-item")
+    let this_val = $(this)
+
+    console.log("product id", product_id);
+
+    $.ajax({
+        url: "/add-to-wishlist",
+        data: {
+            "id": product_id
+        },
+        dataType: "json",
+        
+        success: function(response){
+            if (response.bool === true){
+            this_val.html("❤")
+            console.log("added to wishlist");   
+            }
+            else{
+            this_val.html("🤍")
+            console.log("deleted from wishlist");
+            }
+            
+        }
+    })
+})
+
+

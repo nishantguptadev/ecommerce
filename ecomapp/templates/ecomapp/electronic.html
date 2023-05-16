@@ -21,8 +21,25 @@
       <div class="row p-3">
           {% for i in cat reversed %}
           <div class="card ml-3 mb-3" style="width: 18rem;">
-           <img src="{{i.product_image.url}}" class="card-img-top" style="height: 250px;" alt="...">
-           <div class="card-body">
+            <div class="container">
+              {% if user.is_authenticated %}
+              <button class="add-to-wishlist wishlist" id="wishlist" data-product-item="{{i.id}}">🤍</button>
+              
+             {% for p in like %}
+             {% if p.product.id == i.id %}
+             <button class="add-to-wishlist wishlist" id="wishlist" data-product-item="{{i.id}}">❤</button>
+             
+             {% endif %}
+             {% endfor %}
+              {% else %}
+              <p> <button type="button" class="btn wishlist" data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="Please SignIn to add it to your Wishlist">
+                🤍
+              </button></p> 
+              {% endif %}
+
+            <img src="{{i.product_image.url}}" class="card-img-top" style="height: 250px;" alt="...">
+           
+          </div>           <div class="card-body">
              <h6 class="card-title"><strong>{{i.title|slice:15}}</strong><strong style="float: right;">Rs.{{i.discounted_price}}</strong><h6>
               Brand- {{i.brand}}
               <h3><a href="{% url 'product-detail' i.id %}" class="btn btn-primary shadow">Details</a><form action="{% url 'buy-now' %}" class='d-inline'>

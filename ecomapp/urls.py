@@ -47,4 +47,7 @@ urlpatterns = [
     path('editadd/<str:pk>', views.editadd, name='editadd'),
     path('updateadd/', views.editadd, name='updateadd'),
     path('cancelorder/<str:pk>', views.cancelorder, name='cancelorder'),
+    path('wishlist/', views.wishlist, name='wishlist'),
+    path('add-to-wishlist/', views.add_to_wishlist, name='add-to-wishlist'),
+    # path('delete-from-wishlist/', views.delete_from_wishlist, name='delete-from-wishlist'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,7 +3,7 @@ from django.utils.html import format_html
 
 from django.urls import reverse
 from .models import (
-    Customer, Product, Cart, OrderPlaced, CustomerService
+    Customer, Product, Cart, OrderPlaced, CustomerService, Like, Coupon
 )
 
 # Register your models here.
@@ -26,7 +26,7 @@ class CartModelAdmin(admin.ModelAdmin):
         return format_html('<a href="{}">{}</a>', link, obj.product.title)
 
 @admin.register(OrderPlaced)
-class OrderPlacesModelAdmin(admin.ModelAdmin):
+class OrderPlacedModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user','customer_info','product_info', 'quantity', 'ordered_date', 'status']
     
     def customer_info(self,obj):
@@ -38,5 +38,17 @@ class OrderPlacesModelAdmin(admin.ModelAdmin):
         return format_html('<a href="{}">{}</a>', link, obj.product.title)
 
 @admin.register(CustomerService)
-class OrderPlacesModelAdmin(admin.ModelAdmin):
+class CustomerServiceModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'email', 'query', 'detail']
+
+@admin.register(Like)
+class LikeModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'product_info', 'status']
+
+    def product_info(self,obj):
+        link = reverse("admin:ecomapp_product_change", args=[obj.product.pk])
+        return format_html('<a href="{}">{}</a>', link, obj.product.title)
+
+@admin.register(Coupon)
+class CouponModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'discount', 'discount_type']

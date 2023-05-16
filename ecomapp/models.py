@@ -109,3 +109,21 @@ class CustomerService(models.Model):
     email=models.CharField(max_length=50)
     query=models.CharField(max_length=50)
     detail=models.TextField(max_length=50)
+
+class Like(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE)
+    status=models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.id)
+
+DISCOUNT_TYPE = (
+    ('Rupees', 'Rupees'),
+    ('%', '%'),
+)
+
+class Coupon(models.Model):
+    name=models.CharField(max_length=20)
+    discount = models.IntegerField(default=0)
+    discount_type = models.CharField(max_length=20, choices= DISCOUNT_TYPE, default="")
